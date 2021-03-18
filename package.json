@@ -1,0 +1,18 @@
+{
+	"name": "hubbit2-migrator",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"parse": "node parse-sql.js",
+		"sync": "node sync-db.js"
+	},
+	"dependencies": {
+		"axios": "^0.21.1",
+		"dotenv": "^8.2.0",
+		"moment": "^2.29.1",
+		"moment-timezone": "^0.5.33",
+		"pg": "^8.5.1",
+		"uuid": "^8.3.2"
+	}
+}
