@@ -1,3 +1,4 @@
 hubbit-data.json
 hubbit-backup.sql
 node_modules
+.env

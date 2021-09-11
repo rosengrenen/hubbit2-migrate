@@ -34,17 +34,15 @@ const a_date = new Date("2014-01-01");
 			cids.add(user_session.cid);
 		});
 
+		const GAMMA_URL = String(process.env.GAMMA_URL);
 		const GAMMA_API_KEY = String(process.env.GAMMA_API_KEY);
 		if (GAMMA_API_KEY.length > 0) {
 			console.log("Getting user ids from gamma");
-			const result = await axios.get(
-				"https://gamma.chalmers.it/api/users/minified",
-				{
-					headers: {
-						Authorization: "pre-shared " + GAMMA_API_KEY,
-					},
-				}
-			);
+			const result = await axios.get(GAMMA_URL + "/api/users/minified", {
+				headers: {
+					Authorization: "pre-shared " + GAMMA_API_KEY,
+				},
+			});
 
 			let _cid_user_ids = new Map();
 			for (const user of result.data) {
