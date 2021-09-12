@@ -68,6 +68,7 @@ const a_date = new Date("2014-01-01");
 			});
 		}
 
+		console.log("Removing old data");
 		await client.query("DELETE FROM mac_addresses");
 		await client.query("DELETE FROM sessions");
 		await client.query("DELETE FROM user_sessions");
@@ -109,9 +110,16 @@ FROM UNNEST($1::uuid[], $2::CHAR(17)[], $3::VARCHAR[]) as data(user_id, address,
 	);
 
 	console.log("Checking MAC addresses data");
-	console.log(uuids.every((x) => x.length === 36));
-	console.log(addresses.every((x) => x.length === 17));
 	console.log(
+		"All mac entry ids are ok:",
+		uuids.every((x) => x.length === 36)
+	);
+	console.log(
+		"All mac addressess are ok:",
+		addresses.every((x) => x.length === 17)
+	);
+	console.log(
+		"All devices names are ok:",
 		device_names.every((x) => x !== null && x !== undefined && x.length >= 0)
 	);
 	await client.query(queryText, [uuids, addresses, device_names]);
@@ -140,10 +148,22 @@ FROM UNNEST($1::uuid[], $2::CHAR(17)[], $3::TIMESTAMPTZ[], $4::TIMESTAMPTZ[]) as
 	);
 
 	console.log("Checking sessions data");
-	console.log(uuids.every((x) => x.length === 36));
-	console.log(addresses.every((x) => x.length === 17));
-	console.log(start_times.every((x) => x > a_date));
-	console.log(end_times.every((x) => x > a_date));
+	console.log(
+		"All session ids are ok:",
+		uuids.every((x) => x.length === 36)
+	);
+	console.log(
+		"All session addresses are ok:",
+		addresses.every((x) => x.length === 17)
+	);
+	console.log(
+		"All session start times are ok:",
+		start_times.every((x) => x > a_date)
+	);
+	console.log(
+		"All session end times are ok:",
+		end_times.every((x) => x > a_date)
+	);
 	await client.query(queryText, [uuids, addresses, start_times, end_times]);
 	console.log("Successfully synced sessions");
 }
@@ -171,9 +191,18 @@ FROM UNNEST($1::uuid[], $2::TIMESTAMPTZ[], $3::TIMESTAMPTZ[]) as data(user_id, s
 	);
 
 	console.log("Checking user sessions data");
-	console.log(uuids.every((x) => x.length === 36));
-	console.log(start_times.every((x) => x > a_date));
-	console.log(end_times.every((x) => x > a_date));
+	console.log(
+		"All user session ids are ok:",
+		uuids.every((x) => x.length === 36)
+	);
+	console.log(
+		"All user session start times are ok:",
+		start_times.every((x) => x > a_date)
+	);
+	console.log(
+		"All user session end times are ok:",
+		end_times.every((x) => x > a_date)
+	);
 	await client.query(queryText, [uuids, start_times, end_times]);
 	console.log("Successfully synced sessions");
 }
