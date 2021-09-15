@@ -69,7 +69,7 @@ const a_date = new Date("2014-01-01");
 		}
 
 		console.log("Removing old data");
-		await client.query("DELETE FROM mac_addresses");
+		await client.query("DELETE FROM devices");
 		await client.query("DELETE FROM sessions");
 		await client.query("DELETE FROM user_sessions");
 
@@ -92,9 +92,9 @@ const a_date = new Date("2014-01-01");
 async function sync_mac_addresses(client) {
 	console.log("Syncing MAC addresses");
 	const queryText = `
-INSERT INTO mac_addresses (user_id, address, device_name)
-SELECT data.user_id, data.address, data.device_name
-FROM UNNEST($1::uuid[], $2::CHAR(17)[], $3::VARCHAR[]) as data(user_id, address, device_name)
+INSERT INTO devices (user_id, address, name)
+SELECT data.user_id, data.address, data.name
+FROM UNNEST($1::uuid[], $2::CHAR(17)[], $3::VARCHAR[]) as data(user_id, address, name)
   `;
 
 	let filtered_mac_addrs = data.mac_addrs.filter(
