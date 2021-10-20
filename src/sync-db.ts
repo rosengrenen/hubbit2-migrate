@@ -11,8 +11,6 @@ const data: HubbitData = JSON.parse(raw_data);
 
 let cid_user_ids = new Map();
 
-const a_date = new Date('2014-01-01');
-
 (async function () {
   try {
     const client = new Client({

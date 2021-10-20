@@ -1,5 +1,4 @@
 import fs from 'fs';
-import moment from 'moment-timezone';
 import { Device, HubbitData, Session, UserSession } from './types';
 
 const db = fs.readFileSync('./hubbit-backup.sql', { encoding: 'utf-8' });
@@ -63,8 +62,8 @@ for (const insert_statement of session_insert_statements) {
       }
 
       sessions.push({
-        start_time: moment.tz(r[1], 'Europe/Stockholm').format(),
-        end_time: moment.tz(r[2], 'Europe/Stockholm').format(),
+        start_time: r[1],
+        end_time: r[2],
         mac_address,
         cid: r[4],
       });
@@ -88,8 +87,8 @@ for (const insert_statement of user_session_insert_statements) {
 
     if (r) {
       user_sessions.push({
-        start_time: moment.tz(r[1], 'Europe/Stockholm').format(),
-        end_time: moment.tz(r[2], 'Europe/Stockholm').format(),
+        start_time: r[1],
+        end_time: r[2],
         cid: r[3],
       });
     } else {
